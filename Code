@@ -1,0 +1,107 @@
+#include <list>
+#include <vector>
+using namespace std;
+
+// VEHICLE CLASS //
+class Vehicle {
+public:
+    string vehicleNo;
+
+    Vehicle(string v = "") {
+        vehicleNo = v;
+    }
+};
+
+//EXCEPTION CLASS//
+class ParkingException {
+public:
+    string msg;
+
+    ParkingException(string m) {
+        msg = m;
+    }
+};
+
+//TEMPLATE SEARCH //
+template <class T>
+int searchVehicle(vector<T> arr, string key) {
+    for (int i = 0; i < arr.size(); i++) {
+        if (arr[i].vehicleNo == key)
+            return i;
+    }
+    return -1;
+}
+
+//  PARKING SYSTEM //
+class ParkingSystem {
+    list<Vehicle> park;   // Linked list
+    int capacity;
+
+public:
+    ParkingSystem(int c) {
+        capacity = c;
+    }
+
+    // ENTRY//
+    void enter(Vehicle v) {
+        try {
+            if (park.size() >= capacity) {
+                throw ParkingException("Parking Full!");
+            }
+
+            park.push_back(v);
+            cout << "Parked: " << v.vehicleNo << endl;
+        }
+        catch (ParkingException e) {
+            cout << e.msg << endl;
+        }
+    }
+
+    // EXIT//
+    void exitVehicle(string vno) {
+        bool found = false;
+
+        for (auto it = park.begin(); it != park.end(); it++) {
+            if (it->vehicleNo == vno) {
+                park.erase(it);
+                found = true;
+                cout << "Exited: " << vno << endl;
+                break;
+            }
+        }
+
+        if (!found) {
+            cout << "Invalid Ticket!" << endl;
+        }
+    }
+
+    // DISPLAY//
+    void display() {
+        cout << "\n PARKED VEHICLES \n";
+        for (auto v : park)
+            cout << v.vehicleNo << endl;
+
+        cout << "Total parked: " << park.size() << endl;
+    }
+
+    // CONVERT TO VECTOR (for search)//
+    vector<Vehicle> getVector() {
+        return vector<Vehicle>(park.begin(), park.end());
+    }
+};
+
+// MAIN //
+int main() {
+    ParkingSystem ps();
+
+    ps.enter(Vehicle("DL01A1"));
+    ps.enter(Vehicle("DL02B2"));
+    ps.enter(Vehicle("DL03C3")); 
+
+    ps.exitVehicle("DL01A1");
+    ps.exitVehicle("XYZ"); 
+
+    ps.display();
+
+    return 0;
+}
