@@ -1,1 +1,1 @@
-# Smart-Parking-System
+Smart Parking System is a technology-based project designed to reduce parking difficulties by helping users find available parking spaces efficiently. The system uses programming and automation concepts to manage parking slots, improve vehicle tracking, reduce traffic congestion, and save time. It focuses on providing a simple, fast, and user-friendly parking management solution.
